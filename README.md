@@ -541,3 +541,50 @@ export class TodoComponent implements OnInit {
   }
 }
 ```
+
+## implementando o serviço de deleção para os cards
+```typescript
+// card.component.ts
+// ...
+@Input() id: number = 0;
+@Output() destroyFct: EventEmitter<number> = new EventEmitter(); //parametro para propagar chamada ao componente "pai"
+// ...
+destroy() {
+  this.destroyFct.emit(this.id);
+}
+```
+```html
+<!--card.component.html-->
+<svg (click)="destroy()" ...></svg> 
+```
+```typescript
+// todo.component.ts
+// ...
+interface TodoEntity {
+  id: number;
+  title: string;
+  description: string;
+  status: string;
+}
+// ...
+destroy(id: number) {
+  const self = this;
+  this.http.delete(`http://localhost:3000/api/todo/${id}`)
+    .subscribe({
+      next: async (res: any) => {
+        console.log('chamada a API (destroy) com sucesso.');
+        console.log(self);
+        await self.loadData();
+      },
+      error: (err) => {
+        console.log('erro ao carregar contas!');
+        console.log(err);
+      },
+    });
+}
+```
+```angular181html
+<app-card [title]="task.title" [description]="task.description" [status]="task.status" [id]="task.id" (destroyFct)=destroy(task.id) />
+```
+
+Finalmente, vamos criar o último componente para criação de novas tarefas

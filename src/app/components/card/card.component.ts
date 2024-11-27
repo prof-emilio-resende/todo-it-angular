@@ -1,6 +1,5 @@
-import {Component, HostBinding, Input} from '@angular/core';
+import {Component, EventEmitter, HostBinding, Input, Output} from '@angular/core';
 import {NgClass} from '@angular/common';
-import {NavegadorService} from '../navegador.service';
 
 @Component({
   selector: 'app-card',
@@ -12,12 +11,18 @@ import {NavegadorService} from '../navegador.service';
   standalone: true,
 })
 export class CardComponent {
+  @Input() id: number = 0;
   @Input() title: string = '';
   @Input() description: string = '';
   @Input() status: string = '';
+  @Output() destroyFct: EventEmitter<number> = new EventEmitter();
 
   @HostBinding('class') get hostClasses() {
     return "rounded-lg border bg-card text-card-foreground shadow-sm w-11/12";
+  }
+
+  destroy() {
+    this.destroyFct.emit(this.id);
   }
 
   getCardBadgeClasses() {
