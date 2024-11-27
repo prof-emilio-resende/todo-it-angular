@@ -238,3 +238,47 @@ Pronto! Serviço configurado e registrado, basta utilizá-lo em nosso componente
 ```
 
 Com isso feito, vamos testar essa funcionalidade acessando o componente de login e clicando no botão "Criar minha conta"
+
+> Como próximo passo vamos substituir todas as utilizações de navegação para nossos componentes de login e signup
+
+```html
+<!--login.component.html-->
+<!-- ... -->
+<button
+      type="button"
+      (click)="navegar('/signup/')"
+      ...
+> Entrar </button>
+<!-- ... -->
+```
+
+```typescript
+// signup.component.ts
+// ...
+  navegar(path: string) {
+    this.navegador.navegar(path);
+  }
+// ...
+```
+
+```html
+<!--signup.component.html-->
+<!-- ... -->
+<button
+type="button"
+(click)="navegar('/login/')"
+...
+> Criar minha conta </button>
+<!-- ... -->
+```
+
+```html
+<!--signup.component.html-->
+<!-- ... -->
+<button
+type="button"
+(click)="navegar('/login/')"
+...
+> Cancelar </button>
+<!-- ... -->
+```

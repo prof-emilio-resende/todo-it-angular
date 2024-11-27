@@ -6,7 +6,8 @@ import { NavegadorService } from '../components/navegador.service';
   selector: 'app-login',
   imports: [AppContainerComponent],
   templateUrl: './login.component.html',
-  styleUrl: './login.component.css'
+  styleUrl: './login.component.css',
+  standalone: true
 })
 export class LoginComponent {
 

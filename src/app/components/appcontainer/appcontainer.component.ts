@@ -4,7 +4,8 @@ import { Component, Input } from '@angular/core';
   selector: 'app-container',
   imports: [],
   templateUrl: './appcontainer.component.html',
-  styleUrl: './appcontainer.component.css'
+  styleUrl: './appcontainer.component.css',
+  standalone: true
 })
 export class AppContainerComponent {
   @Input()
