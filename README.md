@@ -501,3 +501,43 @@ Por fim, adicionamos navegar ao nosso componente todo.component.ts
     this.navegador.navegar(path);
   }
 ```
+## adicionando a chamada HTTP
+Para fazer uma chamada HTTP, vamos utilizar o serviço HttpClient da core-library do angular
+
+```typescript
+// app.config.ts
+// ...
+import {provideHttpClient, withFetch} from '@angular/common/http';
+// ...
+providers: [provideZoneChangeDetection({ eventCoalescing: true }), provideRouter(routes), provideHttpClient(withFetch())]
+```
+
+```typescript
+// todo.component.ts
+import {Component, OnInit} from '@angular/core';
+// ...
+export class TodoComponent implements OnInit {
+// ...
+  constructor(private http: HttpClient, private navegador: NavegadorService) {
+  }
+
+  async ngOnInit(): Promise<void> {
+    await this.loadData();
+  }
+  // ...
+  async loadData() {
+    this.http.get("http://localhost:3000/api/todo")
+      .subscribe({
+        next: (res: any) => {
+          console.log('chamada a API com sucesso.');
+          console.log(res);
+          this.todoList = res;
+        },
+        error: (err) => {
+          console.log('erro ao carregar contas!');
+          console.log(err);
+        },
+      });
+  }
+}
+```
