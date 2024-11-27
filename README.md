@@ -282,3 +282,222 @@ type="button"
 > Cancelar </button>
 <!-- ... -->
 ```
+# 4. Criando componente de listagem de tarefas
+
+Vamos adicionar um novo componente, através do comando já conhecido
+```bash
+npm run ng generate component todo
+```
+
+Assim como fizemos antes, vamos copiar o conteúdo do já existente todo list [todo.html](https://github.com/prof-emilio-resende/vite-vanilla-app/blob/main/src/todo/index.html) como base para a criação do nosso componente
+
+Vamos utilizar o componente container e o resultado final será:
+
+```html
+<app-container subtitle="" headline="">
+  <div class="flex flex-col justify-center align-middle items-center space-y-5">
+    <div class="rounded-lg border bg-card text-card-foreground shadow-sm w-11/12">
+      <div class="flex flex-col space-y-1.5 p-5">
+        <div class="flex flex-row justify-between align-middle">
+          <h1>Atividade 1</h1>
+          <svg width="24" height="24" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <path
+              d="M5.5 1C5.22386 1 5 1.22386 5 1.5C5 1.77614 5.22386 2 5.5 2H9.5C9.77614 2 10 1.77614 10 1.5C10 1.22386 9.77614 1 9.5 1H5.5ZM3 3.5C3 3.22386 3.22386 3 3.5 3H5H10H11.5C11.7761 3 12 3.22386 12 3.5C12 3.77614 11.7761 4 11.5 4H11V12C11 12.5523 10.5523 13 10 13H5C4.44772 13 4 12.5523 4 12V4L3.5 4C3.22386 4 3 3.77614 3 3.5ZM5 4H10V12H5V4Z"
+              fill="currentColor" fill-rule="evenodd" clip-rule="evenodd"></path>
+          </svg>
+        </div>
+        <div>
+          <p class="text-slate-500 font-medium">Descri&ccedil;&atilde;o simples</p>
+        </div>
+        <div class="flex flex-row justify-end">
+          <div
+            class="inline-flex items-center rounded-md border px-2.5 py-0.5 text-xs font-light transition-colors focus:outline-none focus:ring-2 focus:ring-ring focus:ring-offset-2 bg-black text-white">
+            Pendente
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="rounded-lg border bg-card text-card-foreground shadow-sm w-11/12">
+      <div class="flex flex-col space-y-1.5 p-5">
+        <div class="flex flex-row justify-between align-middle">
+          <h1>Atividade 2</h1>
+          <svg width="24" height="24" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <path
+              d="M5.5 1C5.22386 1 5 1.22386 5 1.5C5 1.77614 5.22386 2 5.5 2H9.5C9.77614 2 10 1.77614 10 1.5C10 1.22386 9.77614 1 9.5 1H5.5ZM3 3.5C3 3.22386 3.22386 3 3.5 3H5H10H11.5C11.7761 3 12 3.22386 12 3.5C12 3.77614 11.7761 4 11.5 4H11V12C11 12.5523 10.5523 13 10 13H5C4.44772 13 4 12.5523 4 12V4L3.5 4C3.22386 4 3 3.77614 3 3.5ZM5 4H10V12H5V4Z"
+              fill="currentColor" fill-rule="evenodd" clip-rule="evenodd"></path>
+          </svg>
+        </div>
+        <div>
+          <p class="text-slate-500 font-medium">Descri&ccedil;&atilde;o simples</p>
+        </div>
+        <div class="flex flex-row justify-end">
+          <div
+            class="inline-flex items-center rounded-md border px-2.5 py-0.5 text-xs font-light transition-colors focus:outline-none focus:ring-2 focus:ring-ring focus:ring-offset-2 bg-yellow-500 text-black">
+            Em andamento
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="rounded-lg border bg-card text-card-foreground shadow-sm w-11/12">
+      <div class="flex flex-col space-y-1.5 p-5">
+        <div class="flex flex-row justify-between align-middle">
+          <h1>Atividade 3</h1>
+          <svg width="24" height="24" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <path
+              d="M5.5 1C5.22386 1 5 1.22386 5 1.5C5 1.77614 5.22386 2 5.5 2H9.5C9.77614 2 10 1.77614 10 1.5C10 1.22386 9.77614 1 9.5 1H5.5ZM3 3.5C3 3.22386 3.22386 3 3.5 3H5H10H11.5C11.7761 3 12 3.22386 12 3.5C12 3.77614 11.7761 4 11.5 4H11V12C11 12.5523 10.5523 13 10 13H5C4.44772 13 4 12.5523 4 12V4L3.5 4C3.22386 4 3 3.77614 3 3.5ZM5 4H10V12H5V4Z"
+              fill="currentColor" fill-rule="evenodd" clip-rule="evenodd"></path>
+          </svg>
+        </div>
+        <div>
+          <p class="text-slate-500 font-medium">Descri&ccedil;&atilde;o simples</p>
+        </div>
+        <div class="flex flex-row justify-end">
+          <div
+            class="inline-flex items-center rounded-md border px-2.5 py-0.5 text-xs font-light transition-colors focus:outline-none focus:ring-2 focus:ring-ring focus:ring-offset-2 bg-green-500 text-white">
+            Finalizado
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</app-container>
+
+```
+
+> A versão estática já está funcional, chegou a hora de integrar com nossa API ... que tal gerarmos os Cards a partir de uma chamada de API?
+
+Como primeira etapa, vamos ajustar nosso serviço para ele trazer dados fictícios dos Cards
+
+```typescript
+// todo.component.ts
+// ...
+interface TodoEntity {
+  title: string;
+  description: string;
+  status: string;
+}
+// ...
+todoList: Array<TodoEntity> = [];
+constructor() {
+  this.todoList = this.loadData();
+}
+
+loadData() {
+  return [
+    {
+      title: "Atividade 1",
+      description: "Descrição atividade um",
+      status: "Pendente",
+    },
+    {
+      title: "Atividade 2",
+      description: "Descrição atividade dois",
+      status: "Em andamento",
+    },
+    {
+      title: "Atividade 3",
+      description: "Descrição atividade três",
+      status: "Finalizado",
+    }
+  ]
+}
+// ...
+```
+
+E agora vamos extrair o componente Card do nosso TODO
+```bash
+npm run ng generate component components/card
+```
+
+```typescript
+// components/card.component.ts
+import {Component, HostBinding, Input} from '@angular/core';
+import {NgClass} from '@angular/common';
+import {NavegadorService} from '../navegador.service';
+
+@Component({
+  selector: 'app-card',
+  imports: [
+    NgClass
+  ],
+  templateUrl: './card.component.html',
+  styleUrl: './card.component.css',
+  standalone: true,
+})
+export class CardComponent {
+  @Input() title: string = '';
+  @Input() description: string = '';
+  @Input() status: string = '';
+
+  @HostBinding('class') get hostClasses() {
+    return "rounded-lg border bg-card text-card-foreground shadow-sm w-11/12";
+  }
+
+  getCardBadgeClasses() {
+    const allClasses = "inline-flex items-center rounded-md border px-2.5 py-0.5 text-xs font-light transition-colors focus:outline-none focus:ring-2 focus:ring-ring focus:ring-offset-2 ";
+    const badges = {
+      "Pendente": "bg-black text-white",
+      "Em andamento": "bg-yellow-500 text-black",
+      "Finalizado": "bg-green-500 text-white",
+    } as Record<string, string>;
+
+    return allClasses + badges[this.status];
+  }
+}
+
+```
+
+```html
+<!--card.component.html-->
+<div class="">
+  <div class="flex flex-col space-y-1.5 p-5">
+    <div class="flex flex-row justify-between align-middle">
+      <h1>{{title}}</h1>
+      <svg width="24" height="24" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <path
+          d="M5.5 1C5.22386 1 5 1.22386 5 1.5C5 1.77614 5.22386 2 5.5 2H9.5C9.77614 2 10 1.77614 10 1.5C10 1.22386 9.77614 1 9.5 1H5.5ZM3 3.5C3 3.22386 3.22386 3 3.5 3H5H10H11.5C11.7761 3 12 3.22386 12 3.5C12 3.77614 11.7761 4 11.5 4H11V12C11 12.5523 10.5523 13 10 13H5C4.44772 13 4 12.5523 4 12V4L3.5 4C3.22386 4 3 3.77614 3 3.5ZM5 4H10V12H5V4Z"
+          fill="currentColor" fill-rule="evenodd" clip-rule="evenodd"></path>
+      </svg>
+    </div>
+    <div>
+      <p class="text-slate-500 font-medium">{{description}}</p>
+    </div>
+    <div class="flex flex-row justify-end">
+      <div
+        [ngClass]="getCardBadgeClasses()">
+        {{status}}
+      </div>
+    </div>
+  </div>
+</div>
+```
+
+### nova versão do todo.component.html, após extrair o componente card
+
+```angular181html
+<app-container subtitle="" headline="">
+  <div class="flex flex-col justify-center align-middle items-center space-y-5">
+    @for (task of todoList; track task.title) {
+    <app-card [title]="task.title" [description]="task.description" [status]="task.status" />
+    }
+  </div>
+  <div class="w-full content-end text-right p-5">
+    <button type="button" (click)="navegar('/todo/create')"
+            class="inline-flex items-center justify-center gap-2 whitespace-nowrap rounded-md text-sm font-medium ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 [&_svg]:pointer-events-none [&_svg]:size-4 [&_svg]:shrink-0 bg-slate-700 text-slate-100 hover:bg-slate-700/90 h-10 px-4 py-2">
+      Novo Item
+    </button>
+  </div>
+</app-container>
+```
+
+Por fim, adicionamos navegar ao nosso componente todo.component.ts
+```typescript
+// ...
+    constructor(private navegador: NavegadorService) {
+// ...
+  navegar(path: string) {
+    this.navegador.navegar(path);
+  }
+```
