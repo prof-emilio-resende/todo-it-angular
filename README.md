@@ -588,3 +588,105 @@ destroy(id: number) {
 ```
 
 Finalmente, vamos criar o último componente para criação de novas tarefas
+
+# 5. Componente criar tarefa
+Para finalizar, vamos criar um novo componente e ajustar nossas rotas
+
+```bash
+npm run ng generate component todo/create
+```
+
+```angular181html
+<!--create.component.html-->
+<app-container subtitle="Novo item" headline="Digite um título e uma descrição">
+  <form class="flex flex-col justify-center space-y-5" (submit)="criarTarefa()">
+    <input id="title" type="text" placeholder="t&iacute;tulo da atividade" [(ngModel)]="title" [ngModelOptions]="{standalone: true}"
+           class="flex h-10 w-full rounded-md border border-input bg-background px-3 py-2 text-base ring-offset-background file:border-0 file:bg-transparent file:text-sm file:font-medium file:text-foreground placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50 md:text-sm"/>
+    <textarea id="description" placeholder="Descri&ccedil;&atilde;o detalhada da atividade" [(ngModel)]="description" [ngModelOptions]="{standalone: true}"
+              class="flex min-h-[80px] w-full rounded-md border border-input bg-background px-3 py-2 text-base ring-offset-background placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50 md:text-sm"></textarea>
+
+    <button
+      type="submit"
+      class="inline-flex items-center justify-center gap-2 whitespace-nowrap rounded-md text-sm font-medium ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 [&_svg]:pointer-events-none [&_svg]:size-4 [&_svg]:shrink-0 bg-slate-700 text-slate-100 hover:bg-slate-700/90 h-10 px-4 py-2"
+    >
+      Criar
+    </button>
+    <button (click)="navegar('/todo/')" type="button"
+            class="inline-flex items-center justify-center gap-2 whitespace-nowrap rounded-md text-sm font-medium ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 [&_svg]:pointer-events-none [&_svg]:size-4 [&_svg]:shrink-0 bg-red-700 text-slate-100 hover:bg-red-700/90 h-10 px-4 py-2">
+      Cancelar
+    </button>
+  </form>
+</app-container>
+
+```
+```typescript
+// app.routes.ts
+// ...
+import {CreateComponent} from './todo/create/create.component';
+// ...
+{ path: 'todo/create', component: CreateComponent }
+```
+
+```typescript
+// create.component.ts
+import {Component} from '@angular/core';
+import {AppContainerComponent} from '../../components/appcontainer/appcontainer.component';
+import {NavegadorService} from '../../components/navegador.service';
+import {FormsModule} from '@angular/forms';
+import {HttpClient} from '@angular/common/http';
+import {createApplication} from '@angular/platform-browser';
+
+interface TarefaEntity {
+  title: string;
+  description: string;
+  status: string;
+}
+
+@Component({
+  selector: 'app-create',
+  imports: [
+    AppContainerComponent,
+    FormsModule
+  ],
+  templateUrl: './create.component.html',
+  styleUrl: './create.component.css',
+  standalone: true,
+})
+export class CreateComponent {
+  title: string = '';
+  description: string = '';
+
+  constructor(private http: HttpClient, private navegador: NavegadorService) {
+  }
+
+  navegar(path: string) {
+    this.navegador.navegar(path);
+  }
+
+  criarTarefa() {
+    const novaTarefa = {
+      title: this.title,
+      description: this.description,
+      status: "Pendente"
+    } as TarefaEntity;
+
+    console.log("criando nova tarefa ...");
+    console.log(novaTarefa);
+
+    this.http.post("http://localhost:3000/api/todo", novaTarefa).subscribe({
+      next: (res: any) => {
+        console.log("Nova tarefa criada com sucesso!");
+        this.navegador.navegar("/todo");
+      },
+      error: err => {
+        console.log("Erro ao tentar criar nova tarefa.");
+        console.log(err);
+      }
+    })
+
+  }
+
+  protected readonly createApplication = createApplication;
+}
+
+```
